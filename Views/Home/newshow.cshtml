@@ -1,0 +1,40 @@
+@model Show
+
+<div class="card">
+    <div class="card-header bg-danger text-white"><h2>Create an Activiy</h2></div>
+        <div class="card-body">
+            <form action="/create/show" method="post">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input  asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title"></span>
+                </div>            
+            <div class="form-group">
+                    <label>Date:</label>
+                    <input  asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date"></span>
+            </div>
+            <div class="form-group">
+                    <label>Time</label>
+                    <input  asp-for="Time" class="form-control" />
+                    <span asp-validation-for="Time"></span>
+            </div>
+            <div class="form-group">
+                    <label>Duration</label>
+                    <input  asp-for="Duration" class="form-control" />
+                    <select class="form-control" asp-for="DurationType" name="DurationType">
+                        <option value="days">Days</option>
+                        <option value="hours">Hours</option>
+                        <option value="minutes">Minutes</option>
+        </select>
+                    <span asp-validation-for="Duration"></span>
+                </div>
+            <div class="form-group">
+                    <label>Description</label>
+                    <input  asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description"></span>
+                </div>
+                <input type="submit" value="Add Event">
+            </form>
+        </div>
+</div>

@@ -1,0 +1,46 @@
+<h1>Welcome, @ViewBag.User.Name!!</h1>
+@model List<Show>
+
+
+<table class="table border border-success">
+        <thead class="bg-success text-white">
+        <tr>
+            <th>Activity</th>
+            <th>Date and Time</th>
+            <th>Duration</th>
+            <th>Event Coordinator</th>
+            <th># of Participants</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Show w in Model)
+        {
+            <tr>
+            <td><a href="show/@w.ShowID">@w.Title</a></td>
+            <td>@w.Date.ToString("MM/dd") | @w.Time.ToString("hh:mm tt")</td>
+            <td>@w.Duration @w.DurationType</td>
+            <td>@w.Planner.Name</td>
+            <td>@w.Attendees.Count</td>
+            <td>
+                @if(ViewBag.User.UserID == w.Planner.UserID)
+                {
+                    <a class="btn btn-warning btn-sm" href="/delete/@w.ShowID">Delete</a>
+                }
+                else
+                {
+                    //If they are attending 
+                    if(w.Attendees.Any( a => a.UserID == ViewBag.User.UserID))
+                    {
+                        <a class="btn btn-outline-dark btn-sm" asp-action="ToggleShow" asp-route-showid="@w.ShowID" asp-route-status="leave">Leave</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-success btn-sm" asp-action="ToggleShow" asp-route-showid="@w.ShowID" asp-route-status="join">Join</a>
+                    }
+                }
+            </td>
+            </tr>
+        }
+    </tbody>
+</table>

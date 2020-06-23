@@ -1,0 +1,45 @@
+@model Show
+
+<div class="row">
+    <div class="col-sm-8 offset-sm-2">
+        <div class="card">
+            <div class="card-header bg-success text-white">@Model.Title </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p>Event Coordinator: @Model.Planner.Name</p>
+                        <p>Description: @Model.Description</p>
+                        
+                    </div>
+                    <div class="col-sm-4">
+            @if(ViewBag.User.UserID == @Model.Planner.UserID)
+                {
+                    <a class="btn btn-warning btn-sm" href="/delete/@Model.ShowID">Delete</a>
+                }
+                else
+                {
+                    //If they are attending 
+                    if(@Model.Attendees.Any( a => a.UserID == ViewBag.User.UserID))
+                    {
+                        <a class="btn btn-outline-dark btn-sm" asp-action="ToggleShow" asp-route-showid="@Model.ShowID" asp-route-status="leave">Leave</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-success btn-sm" asp-action="ToggleShow" asp-route-showid="@Model.ShowID" asp-route-status="join">Join</a>
+                    }
+                }
+        <br>
+                        <ul class="list-group">
+                            <li class="list-group-item bg-dark text-white">Participants</li>
+                            @foreach( var g in Model.Attendees)
+                            {
+                                <li class="list-group-item">@g.Guest.Name</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
